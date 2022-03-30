@@ -1,5 +1,8 @@
 const { Router } = require('express');
-const { getArticles, createArticle } = require('../controllers/articles.controller');
+const { check } = require('express-validator');
+
+const { getArticles, createArticle, updateArticle, deleteArticle } = require('../controllers/articles.controller');
+const { existsArticleByID } = require('../helpers/db_validators');
 const { validateFields } = require('../middlewares/validate_fields');
 const { validateJWT } = require('../middlewares/validate_jwt');
 const { validateRolesPermissions } = require('../middlewares/validate_roles_permissions');
@@ -18,6 +21,24 @@ router.post('/',[
 router.get('/',[
     validateJWT,
 ], getArticles);
+
+//Update an Article
+router.put('/:articleID',[
+    validateJWT,
+    validateRolesPermissions(['ADMIN_ROLE']),
+    check('articleID','Article ID must be a valid Mongo ID').isMongoId(),
+    check('articleID').custom((articleID) => existsArticleByID(articleID)),
+    validateFields,
+], updateArticle)
+
+//Delete an Article
+router.delete('/:articleID',[
+    validateJWT,
+    validateRolesPermissions(['ADMIN_ROLE']),
+    check('articleID','Article ID must be a valid Mongo ID').isMongoId(),
+    check('articleID').custom((articleID) => existsArticleByID(articleID)),
+    validateFields,
+], deleteArticle)
 
 
 //Exports

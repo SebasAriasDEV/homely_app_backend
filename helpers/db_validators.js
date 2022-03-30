@@ -1,4 +1,4 @@
-const { Building, User, Role} = require('../models');
+const { Building, User, Role, Article} = require('../models');
 
 const buildingNameExists = async (name = '') => {
 
@@ -38,7 +38,18 @@ const existsUserByID = async (uid = '') => {
     const existingUser = await User.findOne({ _id: uid, isActive: true });
 
     if (!existingUser){
-        throw new Error(`The user with ID: ${uid} does NOT exists in the Database. It might have been deleted before.`);
+        throw new Error(`The user with ID: ${uid} does NOT exists in the Database.`);
+    }
+
+    return true;
+}
+
+const existsArticleByID = async (articleID = '') => {
+
+    const existingArticle = await Article.findOne({ _id: articleID, isActive: true });
+
+    if (!existingArticle){
+        throw new Error(`The artcile with ID: ${articleID} does NOT exists in the Database.`);
     }
 
     return true;
@@ -62,5 +73,6 @@ module.exports = {
     userEmailExists,
     existsBuildingByID,
     existsUserByID,
-    isValidRole
+    isValidRole,
+    existsArticleByID
 }

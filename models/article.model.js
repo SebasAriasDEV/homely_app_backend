@@ -4,7 +4,8 @@ const articleSchema = new Schema({
 
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: [true,'User who created the article is required']
     },
     title: {
         type: String,
@@ -13,7 +14,6 @@ const articleSchema = new Schema({
     content: {
         type: String,
         required: [true, 'Content is required'],
-        unique: true,
     },
     building: {
         type: Schema.Types.ObjectId,

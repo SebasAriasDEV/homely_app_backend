@@ -16,6 +16,8 @@ const createUser = async (req = request, res = response) => {
 
     //Save user in DB
     await newUser.save();
+
+    console.log(newUser);
     
     res.status(200).json({
         message: 'User has been created successfully.',
