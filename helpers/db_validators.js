@@ -1,4 +1,4 @@
-const { Building, User, Role, Article} = require('../models');
+const { Building, User, Role, Article, PQR, Clasificado} = require('../models');
 
 const buildingNameExists = async (name = '') => {
 
@@ -13,7 +13,7 @@ const buildingNameExists = async (name = '') => {
 
 const userEmailExists = async (email = '') => {
 
-    const existingUser = await User.findOne({ email, isActive:true });
+    const existingUser = await User.findOne({ email, isDeleted: false });
 
     if (existingUser){
         throw new Error(`The email: ${email} already exists in the Database`);
@@ -35,7 +35,7 @@ const existsBuildingByID = async (uid = '') => {
 
 const existsUserByID = async (uid = '') => {
 
-    const existingUser = await User.findOne({ _id: uid, isActive: true });
+    const existingUser = await User.findOne({ _id: uid, isDeleted: false });
 
     if (!existingUser){
         throw new Error(`The user with ID: ${uid} does NOT exists in the Database.`);
@@ -46,10 +46,31 @@ const existsUserByID = async (uid = '') => {
 
 const existsArticleByID = async (articleID = '') => {
 
-    const existingArticle = await Article.findOne({ _id: articleID, isActive: true });
+    const existingArticle = await Article.findOne({ _id: articleID, isDeleted: false });
 
     if (!existingArticle){
         throw new Error(`The artcile with ID: ${articleID} does NOT exists in the Database.`);
+    }
+
+    return true;
+}
+
+const existsPQRByID = async (pqrID = '') => {
+
+    const existingPQR = await PQR.findOne({ _id: pqrID, isDeleted: false });
+
+    if (!existingPQR){
+        throw new Error(`The PQR with ID: ${pqrID} does NOT exists in the Database.`);
+    }
+
+    return true;
+}
+const existsClasificadoByID = async (clasificadoID = '') => {
+
+    const existingClasificado = await Clasificado.findOne({ _id: clasificadoID, isDeleted: false });
+
+    if (!existingClasificado){
+        throw new Error(`The Clasificado with ID: ${clasificadoID} does NOT exists in the Database.`);
     }
 
     return true;
@@ -74,5 +95,7 @@ module.exports = {
     existsBuildingByID,
     existsUserByID,
     isValidRole,
-    existsArticleByID
+    existsArticleByID,
+    existsPQRByID,
+    existsClasificadoByID
 }

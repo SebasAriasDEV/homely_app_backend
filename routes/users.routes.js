@@ -43,6 +43,7 @@ router.get('/:buildingID',[
 // ******************* Update ***************************************************
 router.put('/:uid',[
     validateJWT,
+    validateSameBuilding,
     validateSameUser,
     check('uid','User ID is required and must be a valid mongo ID').isMongoId(),
     check('uid').custom((uid) => existsUserByID(uid)),

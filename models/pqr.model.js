@@ -1,23 +1,23 @@
 const { Schema, model } = require('mongoose');
 
-const articleSchema = new Schema({
+const pqrSchema = new Schema({
 
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true,'User who created the article is required']
-    },
-    title: {
-        type: String,
-        required: [true, 'Title is required'],
+        required: [true,'User who created the PQR is required']
     },
     content: {
         type: String,
-        required: [true, 'Content is required'],
+        required: [true, 'Content of PQR is required'],
     },
     building: {
         type: Schema.Types.ObjectId,
         ref: 'Building'
+    },
+    isDone: {
+        type: Boolean,
+        default: false,
     },
     isDeleted: {
         type: Boolean,
@@ -25,16 +25,20 @@ const articleSchema = new Schema({
     },
     createdAt : {
         type: Date,
-        required: [true,'Please specify the date of creation for the Article']
+        required: [true,'Please specify the date of creation for the PQR']
     },
+    completedAt : {
+        type: Date,
+    },
+
 
 });
 
-articleSchema.methods.toJSON = function () {
+pqrSchema.methods.toJSON = function () {
     const { __v, ...rest } = this.toObject();
     return rest;
 }
 
 
 //Exports
-module.exports = model('Article', articleSchema);
+module.exports = model('Pqr', pqrSchema);

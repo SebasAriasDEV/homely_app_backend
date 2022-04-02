@@ -7,7 +7,7 @@ const dbConnection = async () => {
         console.log('Connected to Homely DB');
 
     } catch (error) {
-        console.log(error);
+        console.log(error.toString());
         throw new Error(error);
     }
 

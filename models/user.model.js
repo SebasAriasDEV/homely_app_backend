@@ -23,9 +23,9 @@ const userSchema = new Schema({
         type: Number,
         required: false,
     },
-    isActive: {
+    isDeleted: {
         type: Boolean,
-        default: true,
+        default: false,
     },
     role: {
         type: String,
@@ -38,6 +38,10 @@ const userSchema = new Schema({
     unit: {
         type: String,
         required: [true, 'Unit is required'],
+    },
+    createdAt : {
+        type: Date,
+        required: [true,'Please specify the date of creation for the User']
     },
 
     //Notifications

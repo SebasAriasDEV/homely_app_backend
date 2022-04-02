@@ -7,9 +7,13 @@ const buildingSchema = new Schema({
         required: [ true,'Name is required'],
         unique: true,
     },
-    isActive: {
+    isDeleted: {
         type: Boolean,
-        default: true,
+        default: false,
+    },
+    createdAt : {
+        type: Date,
+        required: [true,'Please specify the date of creation for the Building']
     },
 
 

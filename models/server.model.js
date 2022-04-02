@@ -14,6 +14,8 @@ class Server {
         this.buildingsPath = '/api/buildings';
         this.authPath = '/api/auth';
         this.articlesPath = '/api/articles';
+        this.pqrsPath = '/api/pqrs';
+        this.clasificadosPath = '/api/clasificados';
         
         //DB Connection
         this.connectToDB();
@@ -45,6 +47,8 @@ class Server {
         this.app.use( this.buildingsPath, require('../routes/buildings.routes'));
         this.app.use( this.authPath, require('../routes/auth.routes'));
         this.app.use( this.articlesPath, require('../routes/articles.routes'));
+        this.app.use( this.pqrsPath, require('../routes/pqrs.routes'));
+        this.app.use( this.clasificadosPath, require('../routes/clasificados.routes'));
     }
 
     //Listen on PORT

@@ -13,9 +13,8 @@ const createArticle =  async ( req = request, res = response ) => {
         building: req.authenticatedUser.building,
         title,
         content,
+        createdAt: new Date(),
      });
-
-     console.log(newArticle);
     
      try {
          
@@ -37,10 +36,10 @@ const createArticle =  async ( req = request, res = response ) => {
 const getArticles = async ( req = request, res = response ) => {
 
     const { building } = req.authenticatedUser;
-    const articlesFound = await Article.find({ building, isActive:true })
-                            .populate('user','email')
+    const articlesFound = await Article.find({ building, isDeleted:false })
+                            .populate('user','unit')
                             .populate('building','name');
-    const totalArticles = await Article.find({ building, isActive:true }).countDocuments();
+    const totalArticles = await Article.find({ building, isDeleted:false }).countDocuments();
 
     res.status(200).json({
         totalArticles,
@@ -52,7 +51,7 @@ const getArticles = async ( req = request, res = response ) => {
 const updateArticle = async ( req = request, res = response ) => {
 
     const { articleID } = req.params;
-    const { user, building, isActive, ...rest } = req.body;
+    const { user, building, isDeleted, ...rest } = req.body;
 
     const updatedArticle = await Article.findByIdAndUpdate( articleID, rest );
 
@@ -68,7 +67,7 @@ const deleteArticle = async ( req = request, res = response ) => {
 
     const { articleID } = req.params;
 
-    const deletedArticle = await Article.findByIdAndUpdate( articleID, { isActive:false });
+    const deletedArticle = await Article.findByIdAndUpdate( articleID, { isDeleted:true });
 
     res.status(200).json({
         msg: 'Article has been deleted.',

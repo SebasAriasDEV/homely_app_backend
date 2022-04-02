@@ -9,6 +9,9 @@ const createUser = async (req = request, res = response) => {
     
     const { firstName, lastName, role, building, unit , email, password } = req.body;
     const newUser = new User({ firstName, lastName, role, building, unit ,email, password });
+
+    //Set creation date
+    newUser.createdAt =  new Date();
     
     //Encrypt password
     const salt = bcrypt.genSaltSync();
@@ -16,8 +19,6 @@ const createUser = async (req = request, res = response) => {
 
     //Save user in DB
     await newUser.save();
-
-    console.log(newUser);
     
     res.status(200).json({
         message: 'User has been created successfully.',
@@ -28,8 +29,8 @@ const createUser = async (req = request, res = response) => {
 // ******************* Read *****************************************************
 const getAllUsers = async ( req = request, res = response ) => {
     
-    const foundUsers = await User.find({ isActive: true });
-    const totalUsersFound = await User.find({ isActive: true }).countDocuments();
+    const foundUsers = await User.find({ isDeleted: false });
+    const totalUsersFound = await User.find({ isDeleted: false }).countDocuments();
     
     
     res.json({
@@ -44,8 +45,8 @@ const getUsersByBuildingID = async ( req = request, res = response ) => {
     
     const { buildingID } = req.params;
     
-    const foundUsers = await User.find({ isActive: true, building: buildingID });
-    const totalUsersFound = await User.find({ isActive: true, building: buildingID }).countDocuments();
+    const foundUsers = await User.find({ isDeleted: false, building: buildingID });
+    const totalUsersFound = await User.find({ isDeleted: false, building: buildingID }).countDocuments();
     
     
     res.json({
@@ -79,7 +80,7 @@ const updateUserInfo = async ( req = request, res = response ) => {
 const deleteUser = async ( req = request, res = response ) => {
 
     const { uid } = req.params;
-    const deletedUser = await User.findByIdAndUpdate( uid, { isActive: false });
+    const deletedUser = await User.findByIdAndUpdate( uid, { isDeleted: true });
 
     res.status(200).json({
         message: 'User has been deleted successfully.',

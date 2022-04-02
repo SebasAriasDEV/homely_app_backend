@@ -17,7 +17,7 @@ const validateJWT = async ( req = request, res = response, next ) => {
         const { uid, ...rest } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         
         //Look for the authenticated user
-        const authenticatedUser = await User.findOne({ _id: uid, isActive: true });
+        const authenticatedUser = await User.findOne({ _id: uid, isDeleted: false });
         if( !authenticatedUser ){
             return res.status(401).json({
                 msg: 'Token is invalid'
