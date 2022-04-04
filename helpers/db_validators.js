@@ -87,6 +87,15 @@ const isValidRole = async (role = '') => {
     return true;
 }
 
+const isValidCollection = ( collection = '', allowedCollections = []) => {
+
+    if( !allowedCollections.includes(collection) ){
+        throw new Error(`Allowed collections are ${allowedCollections}`);
+    }
+
+    return true;
+}
+
 
 //Exports
 module.exports = {
@@ -97,5 +106,6 @@ module.exports = {
     isValidRole,
     existsArticleByID,
     existsPQRByID,
-    existsClasificadoByID
+    existsClasificadoByID,
+    isValidCollection,
 }

@@ -31,7 +31,9 @@ const clasificadoSchema = new Schema({
         type: Date,
         required: [true,'Please specify the date of creation for the Clasificado']
     },
-
+    img: {
+        type: String,
+    }
 
 
 });

@@ -30,6 +30,9 @@ const pqrSchema = new Schema({
     completedAt : {
         type: Date,
     },
+    img: {
+        type: String,
+    }
 
 
 });

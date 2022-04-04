@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const db = require('../database/db-connection');
+const fileUpload  = require('express-fileupload');
 
 class Server {
 
@@ -16,6 +17,7 @@ class Server {
         this.articlesPath = '/api/articles';
         this.pqrsPath = '/api/pqrs';
         this.clasificadosPath = '/api/clasificados';
+        this.uploadsPath = '/api/uploads';
         
         //DB Connection
         this.connectToDB();
@@ -39,6 +41,12 @@ class Server {
         this.app.use(express.static('public'));
         this.app.use(cors());
         this.app.use(express.json());
+
+        this.app.use(fileUpload({
+            useTempFiles: true,
+            tempFileDir: '/tmp/',
+            createParentPath: true,
+        }));
     }
 
     //Routes
@@ -49,6 +57,7 @@ class Server {
         this.app.use( this.articlesPath, require('../routes/articles.routes'));
         this.app.use( this.pqrsPath, require('../routes/pqrs.routes'));
         this.app.use( this.clasificadosPath, require('../routes/clasificados.routes'));
+        this.app.use( this.uploadsPath, require('../routes/uploads.routes'));
     }
 
     //Listen on PORT
