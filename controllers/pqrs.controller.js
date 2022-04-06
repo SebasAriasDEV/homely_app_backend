@@ -1,4 +1,5 @@
 const { request, response } = require("express");
+const { deleteFileCloudinary } = require("../helpers/upload_files");
 const { PQR } = require("../models");
 
 
@@ -62,7 +63,6 @@ const updatePQR = async ( req = request, res = response ) => {
 
     //Check if the PQR is being closed
     if ( rest.isDone === true ){
-        console.log('PQRS has been completed');
         rest.completedAt = new Date();
     }
 
@@ -80,7 +80,12 @@ const deletePQR = async ( req = request, res = response ) => {
 
     const { pqrID } = req.params;
 
-    const deletedPQR = await PQR.findByIdAndUpdate( pqrID, { isDeleted:true });
+    const deletedPQR = await PQR.findByIdAndUpdate( pqrID, { isDeleted:true, img:'deleted' });
+
+    //Delete Image if existing
+    if( deletedPQR.img ){
+        deleteFileCloudinary( 'pqrs', deletedPQR.img );
+    }
 
     res.status(200).json({
         msg: 'pqr has been deleted.',

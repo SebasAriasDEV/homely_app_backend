@@ -1,12 +1,12 @@
 const { request, response } = require("express");
+const { deleteFileCloudinary } = require("../helpers/upload_files");
 const { Article } = require("../models");
 
 
 
 const createArticle =  async ( req = request, res = response ) => {
 
-    
-    const { title, content} = req.body;
+    const { title, content } = req.body;
 
     const newArticle = Article({ 
         user: req.authenticatedUser._id,
@@ -29,7 +29,7 @@ const createArticle =  async ( req = request, res = response ) => {
 
      res.status(200).json({
          msg: 'Article has been created successfully',
-         newArticle,
+         newArticle: newArticle.toJSON(),
      });
 }
 
@@ -67,7 +67,12 @@ const deleteArticle = async ( req = request, res = response ) => {
 
     const { articleID } = req.params;
 
-    const deletedArticle = await Article.findByIdAndUpdate( articleID, { isDeleted:true });
+    const deletedArticle = await Article.findByIdAndUpdate( articleID, { isDeleted:true, img:'deleted'});
+
+    //Delete Image if existing
+    if( deletedArticle.img ){
+        deleteFileCloudinary( 'articles', deletedArticle.img );
+    }
 
     res.status(200).json({
         msg: 'Article has been deleted.',

@@ -1,4 +1,5 @@
 const { request, response } = require("express");
+const { deleteFileCloudinary } = require("../helpers/upload_files");
 const { Clasificado } = require("../models");
 
 
@@ -67,7 +68,12 @@ const deleteClasificado = async ( req = request, res = response ) => {
 
     const { clasificadoID } = req.params;
     
-    const deletedClasificado = await Clasificado.findByIdAndUpdate( clasificadoID, { isDeleted:true });
+    const deletedClasificado = await Clasificado.findByIdAndUpdate( clasificadoID, { isDeleted:true, img:'deleted' });
+
+    //Delete Image if existing
+    if( deletedClasificado.img ){
+        deleteFileCloudinary( 'clasificados', deletedClasificado.img );
+    }
 
     res.status(200).json({
         msg: 'Clasificado has been deleted.',

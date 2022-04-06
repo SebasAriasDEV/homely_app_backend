@@ -11,7 +11,7 @@ const router = new Router();
 router.put('/:collection/:id',[
     validateJWT,
     validateFileUpload,
-    check('collection').custom((colllection) => isValidCollection(colllection,['pqrs','clasificados'])),
+    check('collection').custom((colllection) => isValidCollection(colllection,['pqrs','clasificados','articles'])),
     check('id','This is not a valid ID in our database').isMongoId(),
     validateFields,
 ], updateImageCloudinary);

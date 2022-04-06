@@ -1,5 +1,7 @@
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const cloudinary = require('cloudinary').v2
+cloudinary.config( process.env.CLOUDINARY_URL);
 
 
 
@@ -33,7 +35,20 @@ const uploadFileHelper = ( files, allowedExtentions = ['png', 'jpeg', 'jpg'], fo
 
 }
 
+const deleteFileCloudinary = async ( collection = '', imgURL = '') => {
+
+    const urlSplit = imgURL.split('/');
+    const name = urlSplit[ urlSplit.length -1 ]; 
+    const [ fileName, extenstion ] = name.split('.');
+
+    const public_id = `${ collection }/${ fileName }`;
+
+    await cloudinary.uploader.destroy( public_id );
+
+}
+
 //Exports
 module.exports = {
-    uploadFileHelper
+    uploadFileHelper,
+    deleteFileCloudinary,
 }

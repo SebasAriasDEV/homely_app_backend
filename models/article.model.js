@@ -1,11 +1,14 @@
-const { Schema, model } = require('mongoose');
+const {
+    Schema,
+    model
+} = require('mongoose');
 
 const articleSchema = new Schema({
 
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true,'User who created the article is required']
+        required: [true, 'User who created the article is required']
     },
     title: {
         type: String,
@@ -23,15 +26,21 @@ const articleSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    createdAt : {
+    createdAt: {
         type: Date,
-        required: [true,'Please specify the date of creation for the Article']
+        required: [true, 'Please specify the date of creation for the Article']
     },
+    img: {
+        type: String,
+    }
 
 });
 
 articleSchema.methods.toJSON = function () {
-    const { __v, ...rest } = this.toObject();
+    const {
+        __v,
+        ...rest
+    } = this.toObject();
     return rest;
 }
 
