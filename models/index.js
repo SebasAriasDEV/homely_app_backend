@@ -7,6 +7,9 @@ const Role = require('./role.model');
 const Article = require('./article.model');
 const PQR = require('./pqr.model');
 const Clasificado = require('./clasificado.model');
+const Message = require('./message.model');
+const Notification = require('./notification.model');
+const Place = require('./place.model');
 
 
 
@@ -19,4 +22,7 @@ module.exports = {
     Article,
     PQR,
     Clasificado,
+    Message,
+    Notification,
+    Place,
 }

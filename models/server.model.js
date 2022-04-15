@@ -18,6 +18,9 @@ class Server {
         this.pqrsPath = '/api/pqrs';
         this.clasificadosPath = '/api/clasificados';
         this.uploadsPath = '/api/uploads';
+        this.chatsPath = '/api/chats';
+        this.notificationsPath = '/api/notifications';
+        this.placesPath = '/api/places';
         
         //DB Connection
         this.connectToDB();
@@ -58,6 +61,9 @@ class Server {
         this.app.use( this.pqrsPath, require('../routes/pqrs.routes'));
         this.app.use( this.clasificadosPath, require('../routes/clasificados.routes'));
         this.app.use( this.uploadsPath, require('../routes/uploads.routes'));
+        this.app.use( this.chatsPath, require('../routes/chats.routes'));
+        this.app.use( this.notificationsPath, require('../routes/notifications.routes'));
+        this.app.use( this.placesPath, require('../routes/places.routes'));
     }
 
     //Listen on PORT

@@ -1,4 +1,4 @@
-const { Building, User, Role, Article, PQR, Clasificado} = require('../models');
+const { Building, User, Role, Article, PQR, Clasificado, Notification, Place} = require('../models');
 
 const buildingNameExists = async (name = '') => {
 
@@ -65,12 +65,35 @@ const existsPQRByID = async (pqrID = '') => {
 
     return true;
 }
+
 const existsClasificadoByID = async (clasificadoID = '') => {
 
     const existingClasificado = await Clasificado.findOne({ _id: clasificadoID, isDeleted: false });
 
     if (!existingClasificado){
         throw new Error(`The Clasificado with ID: ${clasificadoID} does NOT exists in the Database.`);
+    }
+
+    return true;
+}
+
+const existsNotificationByID = async (notificationID = '') => {
+
+    const existingNotification = await Notification.findById( notificationID );
+
+    if (!existingNotification){
+        throw new Error(`The Notification with ID: ${notificationID} does NOT exists in the Database.`);
+    }
+
+    return true;
+}
+
+const existsPlaceByID = async (placeID = '') => {
+
+    const existingPlace = await Place.findById( placeID );
+
+    if (!existingPlace){
+        throw new Error(`The Place with ID: ${placeID} does NOT exists in the Database.`);
     }
 
     return true;
@@ -108,4 +131,6 @@ module.exports = {
     existsPQRByID,
     existsClasificadoByID,
     isValidCollection,
+    existsNotificationByID,
+    existsPlaceByID,
 }

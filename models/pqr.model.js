@@ -33,6 +33,11 @@ const pqrSchema = new Schema({
     img: {
         type: String,
     }
+    ,
+    conversation: {
+        type: Schema.Types.ObjectId,
+        ref: 'Conversation'
+    }
 
 
 });

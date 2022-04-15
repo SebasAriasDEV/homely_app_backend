@@ -15,6 +15,14 @@ const buildingSchema = new Schema({
         type: Date,
         required: [true,'Please specify the date of creation for the Building']
     },
+    latitude: {
+        type: Number,
+        required: [true,'Latitue is required']
+    },
+    longitude: {
+        type: Number,
+        required: [true,'Longitude is required']
+    },
 
 
     //Services inlcuded in each building

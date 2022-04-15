@@ -2,19 +2,26 @@ const { Schema, model } = require('mongoose');
 
 const messageSchema = new Schema({
 
-    conversation: {
+    pqr: {
         type: Schema.Types.ObjectId,
-        ref: 'Message'
+        ref: 'Pqr'
     },
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    receiver: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    building: {
+        type: Schema.Types.ObjectId,
+        ref: 'Building'
+    },
     content: {
         type: String,
         required: true,
     },
-    
     isDeleted: {
         type: Boolean,
         default: false,

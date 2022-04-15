@@ -14,6 +14,9 @@ const router = new Router();
 router.post('/',[
     validateJWT,
     validateRolesPermissions(['ADMIN_ROLE']),
+    check('title','Title of the article is required').notEmpty(),
+    check('content','Content of the article is required').notEmpty(),
+    check('keyWord','KeyWord of the article is required').notEmpty(),
     validateFields,
 ], createArticle);
 

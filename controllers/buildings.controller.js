@@ -13,8 +13,8 @@ const getAllBuildings = ( req = request, res = response ) =>{
 
 const createBuilding = async (req = request, res = response) => {
 
-    const { name } = req.body;
-    const newBuilding = new Building({ name, createdAt: new Date() });
+    const { name, latitude, longitude } = req.body;
+    const newBuilding = new Building({ name, latitude, longitude, createdAt: new Date() });
 
 
 

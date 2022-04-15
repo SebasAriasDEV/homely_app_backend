@@ -17,6 +17,8 @@ router.post('/createBuilding',[
     validateRolesPermissions(['SUPER_ADMIN_ROLE']),
     check('name', 'Name of building is required').notEmpty(),
     check('name').custom((name)=> buildingNameExists(name)),
+    check('latitude', 'Latitude of building is required and must be a number').notEmpty().isNumeric(),
+    check('longitude', 'Longitude of building is required and must be a number').notEmpty().isNumeric(),
     validateFields
 ], createBuilding );
 

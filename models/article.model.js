@@ -18,6 +18,10 @@ const articleSchema = new Schema({
         type: String,
         required: [true, 'Content is required'],
     },
+    keyWord: {
+        type: String,
+        required: [true, 'Keyword is required'],
+    },
     building: {
         type: Schema.Types.ObjectId,
         ref: 'Building'

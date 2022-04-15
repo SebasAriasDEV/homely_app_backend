@@ -6,18 +6,18 @@ const { Article } = require("../models");
 
 const createArticle =  async ( req = request, res = response ) => {
 
-    const { title, content } = req.body;
+    const { title, content, keyWord } = req.body;
 
     const newArticle = Article({ 
         user: req.authenticatedUser._id,
         building: req.authenticatedUser.building,
         title,
         content,
+        keyWord,
         createdAt: new Date(),
      });
     
      try {
-         
          await newArticle.save();
      } catch (error) {
          console.log(error);
@@ -25,7 +25,6 @@ const createArticle =  async ( req = request, res = response ) => {
              msg: error.toString(),
          });
      }
-
 
      res.status(200).json({
          msg: 'Article has been created successfully',

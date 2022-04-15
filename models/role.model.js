@@ -7,8 +7,12 @@ const roleSchema = new Schema({
         required: [true, 'Name is required'],
     },
 
-
 });
+
+roleSchema.methods.toJSON = function () {
+    const { __v, ...rest } = this.toObject();
+    return rest;
+}
 
 
 //Exports
