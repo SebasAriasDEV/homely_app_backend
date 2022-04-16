@@ -10,6 +10,7 @@ const Clasificado = require('./clasificado.model');
 const Message = require('./message.model');
 const Notification = require('./notification.model');
 const Place = require('./place.model');
+const Facility = require('./facility.model');
 
 
 
@@ -25,4 +26,5 @@ module.exports = {
     Message,
     Notification,
     Place,
+    Facility,
 }

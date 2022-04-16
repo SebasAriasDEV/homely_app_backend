@@ -21,6 +21,7 @@ class Server {
         this.chatsPath = '/api/chats';
         this.notificationsPath = '/api/notifications';
         this.placesPath = '/api/places';
+        this.facilitiesPath = '/api/facilities';
         
         //DB Connection
         this.connectToDB();
@@ -64,6 +65,7 @@ class Server {
         this.app.use( this.chatsPath, require('../routes/chats.routes'));
         this.app.use( this.notificationsPath, require('../routes/notifications.routes'));
         this.app.use( this.placesPath, require('../routes/places.routes'));
+        this.app.use( this.facilitiesPath, require('../routes/facilities.routes'));
     }
 
     //Listen on PORT

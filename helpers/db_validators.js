@@ -1,4 +1,4 @@
-const { Building, User, Role, Article, PQR, Clasificado, Notification, Place} = require('../models');
+const { Building, User, Role, Article, PQR, Clasificado, Notification, Place, Facility} = require('../models');
 
 const buildingNameExists = async (name = '') => {
 
@@ -99,6 +99,17 @@ const existsPlaceByID = async (placeID = '') => {
     return true;
 }
 
+const existsFacilityByID = async (facilityID = '') => {
+
+    const existingFacility = await Facility.findById( facilityID );
+
+    if (!existingFacility){
+        throw new Error(`The Facility with ID: ${facilityID} does NOT exists in the Database.`);
+    }
+
+    return true;
+}
+
 const isValidRole = async (role = '') => {
     
     const foundRole = await Role.findOne({ role });
@@ -133,4 +144,5 @@ module.exports = {
     isValidCollection,
     existsNotificationByID,
     existsPlaceByID,
+    existsFacilityByID
 }
