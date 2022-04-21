@@ -5,14 +5,17 @@ const { Reservation } = require("../models");
 
 const makeReservation = async ( req = request , res = response ) => {
 
-    const { startTime, endTime, facility, alwaysBlocked = false } = req.body;
+    const { startTimeUTC, endTimeUTC, facility, alwaysBlocked = false } = req.body;
     const { _id:userID, building } = req.authenticatedUser;
 
-    const startDate = new Date( startTime );
-    const endDate = new Date( endTime );
+    const startDate = new Date( startTimeUTC );
+    const endDate = new Date( endTimeUTC );
 
     //Validate is timeslot is available
     const isAvailable = await isTimeAvailable( startDate, endDate, building, facility );
+
+    console.log( 'Response: ', isAvailable);
+    console.log('=================');
     if( !isAvailable ) {
         return res.status(400).json({
             msg: 'The time you are trying to book is not available.'
@@ -23,8 +26,8 @@ const makeReservation = async ( req = request , res = response ) => {
         user: userID,
         building,
         facility,
-        startTime: startDate,
-        endTime: endDate,
+        startTimeUTC: startDate,
+        endTimeUTC: endDate,
         alwaysBlocked,
     });
 
@@ -50,8 +53,8 @@ const getReservationsByDay = async ( req = request , res = response ) => {
 
     //Get only the reservations from the same day
     foundReservations.forEach( reservation => {
-        if ( (formatDateUTC.getUTCDay() === reservation.startTime.getUTCDay() && formatDateUTC.getUTCMonth() === reservation.startTime.getUTCMonth() && formatDateUTC.getUTCFullYear() === reservation.startTime.getUTCFullYear() ) 
-            || (formatDateUTC.getUTCDay() === reservation.endTime.getUTCDay() && formatDateUTC.getUTCMonth() === reservation.endTime.getUTCMonth() && formatDateUTC.getUTCFullYear() === reservation.endTime.getUTCFullYear() )
+        if ( (formatDateUTC.getUTCDay() === reservation.startTimeUTC.getUTCDay() && formatDateUTC.getUTCMonth() === reservation.startTimeUTC.getUTCMonth() && formatDateUTC.getUTCFullYear() === reservation.startTimeUTC.getUTCFullYear() ) 
+            || (formatDateUTC.getUTCDay() === reservation.endTimeUTC.getUTCDay() && formatDateUTC.getUTCMonth() === reservation.endTimeUTC.getUTCMonth() && formatDateUTC.getUTCFullYear() === reservation.endTimeUTC.getUTCFullYear() )
             ) {
                 returnReservations.push( reservation );
         }

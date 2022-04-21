@@ -19,11 +19,11 @@ const facilitySchema = new Schema({
         type: Number,
         required: [true,'Capacity number is required'],
     },
-    startTime: {
+    startTimeUTC: {
         type: Number,
         required: [true,'Start Time is required'],
     },
-    endTime: {
+    endTimeUTC: {
         type: Number,
         required: [true,'Start Time is required'],
     },

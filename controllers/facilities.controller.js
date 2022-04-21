@@ -4,8 +4,8 @@ const { Facility } = require("../models");
 
 const createFacility = async ( req = request, res = response ) => {
 
-    const { name, building, capacity, startTime, endTime } = req.body;
-    const newFacility = Facility({ name, building, capacity, startTime, endTime });
+    const { name, building, capacity, startTimeUTC, endTimeUTC } = req.body;
+    const newFacility = Facility({ name, building, capacity, startTimeUTC, endTimeUTC });
 
     //Check if Facility already exists in the building
     const facilityFound = await Facility.findOne({ name, building });

@@ -17,8 +17,8 @@ router.post('/', [
     check('building','Field building is required and must be a valid Mongo ID').isMongoId(),
     check('building').custom( existsBuildingByID ),
     check('capacity','Field capacity is required and must be a number').notEmpty().isNumeric(),
-    check('startTime','Field startTime is required and must be a number').notEmpty().isNumeric(),
-    check('endTime','Field endTime is required and must be a number').notEmpty().isNumeric(),
+    check('startTimeUTC','Field startTimeUTC is required and must be a number').notEmpty().isNumeric(),
+    check('endTimeUTC','Field endTimeUTC is required and must be a number').notEmpty().isNumeric(),
     validateFields,
 ], createFacility);
 

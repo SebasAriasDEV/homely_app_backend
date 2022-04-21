@@ -18,11 +18,11 @@ const reservationSchema = new Schema({
         ref: 'Facility',
         required: [ true, 'Facility is required']
     },
-    startTime: {
+    startTimeUTC: {
         type: Date,
         required: [ true, 'Start time is required']
     },
-    endTime: {
+    endTimeUTC: {
         type: Date,
         required: [ true, 'End time is required']
     },

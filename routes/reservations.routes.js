@@ -12,8 +12,8 @@ router.post('/',[
     validateJWT,
     check('facility','Facility is required and needs to be a valid mongo ID').isMongoId(),
     check('facility').custom( existsFacilityByID ),
-    check('startTime','startTime is required and needs to be a valid Timestamp').notEmpty(),
-    check('endTime','endTime is required and needs to be a valid Timestamp').notEmpty(),
+    check('startTimeUTC','startTimeUTC is required and needs to be a valid Timestamp').notEmpty(),
+    check('endTimeUTC','endTimeUTC is required and needs to be a valid Timestamp').notEmpty(),
     validateFields,
 ], makeReservation );
 
