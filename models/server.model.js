@@ -22,6 +22,7 @@ class Server {
         this.notificationsPath = '/api/notifications';
         this.placesPath = '/api/places';
         this.facilitiesPath = '/api/facilities';
+        this.reservationsPath = '/api/facilities/reservations';
         
         //DB Connection
         this.connectToDB();
@@ -66,6 +67,7 @@ class Server {
         this.app.use( this.notificationsPath, require('../routes/notifications.routes'));
         this.app.use( this.placesPath, require('../routes/places.routes'));
         this.app.use( this.facilitiesPath, require('../routes/facilities.routes'));
+        this.app.use( this.reservationsPath, require('../routes/reservations.routes'));
     }
 
     //Listen on PORT

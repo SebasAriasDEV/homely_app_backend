@@ -11,6 +11,7 @@ const Message = require('./message.model');
 const Notification = require('./notification.model');
 const Place = require('./place.model');
 const Facility = require('./facility.model');
+const Reservation = require('./reservation.model');
 
 
 
@@ -27,4 +28,5 @@ module.exports = {
     Notification,
     Place,
     Facility,
+    Reservation,
 }
