@@ -45,10 +45,10 @@ const userSchema = new Schema({
     },
 
     //Notifications
-    FCMToken: {
+    fcmToken: {
         type: String,
     },
-    FCMTokenDate: {
+    fcmTokenDate: {
         type: Date,
     },
 

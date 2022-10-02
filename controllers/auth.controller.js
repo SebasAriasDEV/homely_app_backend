@@ -30,7 +30,19 @@ const authLogin = async (req = request, res = response ) => {
     const token = await generateJWT( userFound._id);
 
     res.status(200).json({
-        msg: 'Login',
+        userFound,
+        token,
+    });
+}
+
+const renewToken = async(req = request, res = response ) => {
+
+    //Si llegó hasta aca es porque el TOKEN si es valido
+    userFound = req.authenticatedUser;
+    //Generate JWT
+    const token = await generateJWT( userFound._id);
+
+    return res.status(200).json({
         userFound,
         token,
     });
@@ -39,4 +51,5 @@ const authLogin = async (req = request, res = response ) => {
 //Exports
 module.exports = {
     authLogin,
+    renewToken
 }
