@@ -13,16 +13,30 @@ const authLogin = async (req = request, res = response ) => {
     //Check if email exists
     const userFound = await User.findOne({ email });
     if ( !userFound ){
+        let errors = [
+            {
+                msg: `User with email ${email} does NOT exist`,
+                param: 'email',
+                location: 'body'
+            }
+        ];
         return res.status(400).json({
-            msg: `User with email ${email} does NOT exist.`
+            errors
         });
     }
 
     //Validate Password
     const passwordOK = bcrypt.compareSync( password, userFound.password);
     if( !passwordOK ){
+        let errors = [
+            {
+                msg: 'Email and password do NOT match',
+                param: 'emailOrPassword',
+                location: 'body'
+            }
+        ];
         return res.status(400).json({
-            msg: 'Email and password does NOT match.'
+            errors
         });
     }
 

@@ -35,16 +35,45 @@ const createArticle =  async ( req = request, res = response ) => {
 const getArticles = async ( req = request, res = response ) => {
 
     const { building } = req.authenticatedUser;
+    const { from = 0, limit = 10 } = req.query;
+    
     const articlesFound = await Article.find({ building, isDeleted:false })
-                            .populate('user','unit')
-                            .populate('building','name');
+                                            .skip(from)
+                                            .sort({'createdAt':'desc'})
+                                            .limit(limit)
+                                            .populate('user','unit')
+                                            .populate('building','name');
     const totalArticles = await Article.find({ building, isDeleted:false }).countDocuments();
-
+    
     res.status(200).json({
         totalArticles,
         articlesFound,
     });
+    
+}
 
+const getArticlesBySearchKeyword = async ( req = request, res = response ) => {
+    
+    const { searchKeyword } = req.params;
+    const { building } = req.authenticatedUser;
+    const { from = 0, limit = 10 } = req.query;
+
+    const regExpression = new RegExp(`${searchKeyword}`,'i');
+    console.log(regExpression);
+
+    const foundArticles = await  Article.find({ building, isDeleted:false, title: regExpression })
+                                            .skip(from)
+                                            .sort({'createdAt':'desc'})
+                                            .limit(limit)
+                                            .populate('user','unit')
+                                            .populate('building','name');
+    
+    const totalArticles = await Article.find({ building, isDeleted:false, title: regExpression }).countDocuments();
+
+    res.status(200).json({
+        totalArticles,
+        foundArticles
+    });
 }
 
 const updateArticle = async ( req = request, res = response ) => {
@@ -88,5 +117,6 @@ module.exports = {
     createArticle,
     getArticles,
     updateArticle,
-    deleteArticle
+    deleteArticle,
+    getArticlesBySearchKeyword
 }

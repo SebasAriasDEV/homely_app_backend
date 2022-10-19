@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { getArticles, createArticle, updateArticle, deleteArticle } = require('../controllers/articles.controller');
+const { getArticles, createArticle, updateArticle, deleteArticle, getArticlesBySearchKeyword } = require('../controllers/articles.controller');
 const { existsArticleByID } = require('../helpers/db_validators');
 const { validateFields } = require('../middlewares/validate_fields');
 const { validateJWT } = require('../middlewares/validate_jwt');
@@ -25,6 +25,13 @@ router.get('/',[
     validateJWT,
 ], getArticles);
 
+//Get articles by search keyword
+router.get('/:searchKeyword',[
+    validateJWT,
+    check('searchKeyword','Search Keyword is required').isString(),
+    validateFields
+], getArticlesBySearchKeyword);
+
 //Update an Article
 router.put('/:articleID',[
     validateJWT,
@@ -32,7 +39,7 @@ router.put('/:articleID',[
     check('articleID','Article ID must be a valid Mongo ID').isMongoId(),
     check('articleID').custom((articleID) => existsArticleByID(articleID)),
     validateFields,
-], updateArticle)
+], updateArticle);
 
 //Delete an Article
 router.delete('/:articleID',[
@@ -41,7 +48,7 @@ router.delete('/:articleID',[
     check('articleID','Article ID must be a valid Mongo ID').isMongoId(),
     check('articleID').custom((articleID) => existsArticleByID(articleID)),
     validateFields,
-], deleteArticle)
+], deleteArticle);
 
 
 //Exports

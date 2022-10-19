@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { getAllBuildings, createBuilding } = require('../controllers/buildings.controller');
-const { buildingNameExists } = require('../helpers/db_validators');
+const { getAllBuildings, createBuilding, getBuildingInfo } = require('../controllers/buildings.controller');
+const { buildingNameExists, existsBuildingByID } = require('../helpers/db_validators');
 const { validateFields } = require('../middlewares/validate_fields');
 const { validateJWT } = require('../middlewares/validate_jwt');
 const { validateRolesPermissions } = require('../middlewares/validate_roles_permissions');
@@ -21,6 +21,10 @@ router.post('/createBuilding',[
     check('longitude', 'Longitude of building is required and must be a number').notEmpty().isNumeric(),
     validateFields
 ], createBuilding );
+
+router.get('/buildingInfo',[
+    validateJWT,
+], getBuildingInfo);
 
 
 //Exports
